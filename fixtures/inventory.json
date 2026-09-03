@@ -1,0 +1,59 @@
+{
+  "_notice": "SYNTHETIC FIXTURE — not operational data. Opening stock positions before the seeded timeline is replayed.",
+  "_contention": "ORS-KIT is deliberately short. The seeded IMMEDIATE request for 400 kits to Sector North cannot be filled from any single site, and the equity floor caps what may be drawn from Sector South. The recommender must therefore propose a multi-site allocation with an explicit shortfall.",
+  "positions": [
+    { "site_id": "site_cache",   "sku_id": "sku_ors",        "on_hand": 200, "reserved": 20, "reorder_point": 100 },
+    { "site_id": "site_staging", "sku_id": "sku_ors",        "on_hand": 90,  "reserved": 0,  "reorder_point": 20 },
+    { "site_id": "site_north",   "sku_id": "sku_ors",        "on_hand": 25,  "reserved": 0,  "reorder_point": 80 },
+    { "site_id": "site_south",   "sku_id": "sku_ors",        "on_hand": 60,  "reserved": 0,  "reorder_point": 80 },
+
+    { "site_id": "site_cache",   "sku_id": "sku_electrolyte","on_hand": 90,  "reserved": 0,  "reorder_point": 30 },
+    { "site_id": "site_north",   "sku_id": "sku_electrolyte","on_hand": 10,  "reserved": 0,  "reorder_point": 12 },
+    { "site_id": "site_south",   "sku_id": "sku_electrolyte","on_hand": 14,  "reserved": 0,  "reorder_point": 12 },
+
+    { "site_id": "site_cache",   "sku_id": "sku_water",      "on_hand": 40,  "reserved": 0,  "reorder_point": 10 },
+    { "site_id": "site_staging", "sku_id": "sku_water",      "on_hand": 8,   "reserved": 0,  "reorder_point": 2 },
+    { "site_id": "site_north",   "sku_id": "sku_water",      "on_hand": 4,   "reserved": 0,  "reorder_point": 6 },
+    { "site_id": "site_south",   "sku_id": "sku_water",      "on_hand": 6,   "reserved": 0,  "reorder_point": 6 },
+
+    { "site_id": "site_cache",   "sku_id": "sku_cot",        "on_hand": 120, "reserved": 0,  "reorder_point": 40 },
+    { "site_id": "site_staging", "sku_id": "sku_cot",        "on_hand": 30,  "reserved": 0,  "reorder_point": 10 },
+    { "site_id": "site_north",   "sku_id": "sku_cot",        "on_hand": 40,  "reserved": 0,  "reorder_point": 30 },
+    { "site_id": "site_south",   "sku_id": "sku_cot",        "on_hand": 20,  "reserved": 0,  "reorder_point": 30 },
+
+    { "site_id": "site_cache",   "sku_id": "sku_shade",      "on_hand": 60,  "reserved": 0,  "reorder_point": 20 },
+    { "site_id": "site_staging", "sku_id": "sku_shade",      "on_hand": 25,  "reserved": 0,  "reorder_point": 5 },
+    { "site_id": "site_north",   "sku_id": "sku_shade",      "on_hand": 12,  "reserved": 0,  "reorder_point": 15 },
+    { "site_id": "site_south",   "sku_id": "sku_shade",      "on_hand": 15,  "reserved": 0,  "reorder_point": 15 },
+
+    { "site_id": "site_cache",   "sku_id": "sku_mistfan",    "on_hand": 30,  "reserved": 0,  "reorder_point": 10 },
+    { "site_id": "site_staging", "sku_id": "sku_mistfan",    "on_hand": 4,   "reserved": 0,  "reorder_point": 2 },
+    { "site_id": "site_north",   "sku_id": "sku_mistfan",    "on_hand": 8,   "reserved": 0,  "reorder_point": 6 },
+    { "site_id": "site_south",   "sku_id": "sku_mistfan",    "on_hand": 6,   "reserved": 0,  "reorder_point": 6 },
+
+    { "site_id": "site_cache",   "sku_id": "sku_icepack",    "on_hand": 80,  "reserved": 0,  "reorder_point": 30 },
+    { "site_id": "site_staging", "sku_id": "sku_icepack",    "on_hand": 10,  "reserved": 0,  "reorder_point": 5 },
+    { "site_id": "site_north",   "sku_id": "sku_icepack",    "on_hand": 20,  "reserved": 0,  "reorder_point": 20 },
+    { "site_id": "site_south",   "sku_id": "sku_icepack",    "on_hand": 18,  "reserved": 0,  "reorder_point": 20 },
+
+    { "site_id": "site_cache",   "sku_id": "sku_n95",        "on_hand": 150, "reserved": 0,  "reorder_point": 50 },
+    { "site_id": "site_staging", "sku_id": "sku_n95",        "on_hand": 25,  "reserved": 0,  "reorder_point": 10 },
+    { "site_id": "site_north",   "sku_id": "sku_n95",        "on_hand": 20,  "reserved": 0,  "reorder_point": 15 },
+    { "site_id": "site_south",   "sku_id": "sku_n95",        "on_hand": 18,  "reserved": 0,  "reorder_point": 15 },
+
+    { "site_id": "site_cache",   "sku_id": "sku_glove",      "on_hand": 200, "reserved": 0,  "reorder_point": 60 },
+    { "site_id": "site_staging", "sku_id": "sku_glove",      "on_hand": 30,  "reserved": 0,  "reorder_point": 10 },
+    { "site_id": "site_north",   "sku_id": "sku_glove",      "on_hand": 30,  "reserved": 0,  "reorder_point": 20 },
+    { "site_id": "site_south",   "sku_id": "sku_glove",      "on_hand": 28,  "reserved": 0,  "reorder_point": 20 },
+
+    { "site_id": "site_cache",   "sku_id": "sku_coldchain",  "on_hand": 12,  "reserved": 2,  "reorder_point": 4 },
+    { "site_id": "site_staging", "sku_id": "sku_coldchain",  "on_hand": 3,   "reserved": 0,  "reorder_point": 2 },
+
+    { "site_id": "site_staging", "sku_id": "sku_amb",        "on_hand": 4,   "reserved": 1,  "reorder_point": 2 },
+    { "site_id": "site_north",   "sku_id": "sku_amb",        "on_hand": 2,   "reserved": 0,  "reorder_point": 1 },
+    { "site_id": "site_south",   "sku_id": "sku_amb",        "on_hand": 2,   "reserved": 0,  "reorder_point": 1 },
+
+    { "site_id": "site_staging", "sku_id": "sku_epi",        "on_hand": 1,   "reserved": 0,  "reorder_point": 1 },
+    { "site_id": "site_cache",   "sku_id": "sku_epi",        "on_hand": 0,   "reserved": 0,  "reorder_point": 0 }
+  ]
+}

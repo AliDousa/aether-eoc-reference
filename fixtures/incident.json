@@ -1,0 +1,24 @@
+{
+  "_notice": "SYNTHETIC FIXTURE — not operational data. This incident is fictional. It is not, and does not describe, any real event.",
+  "incident": {
+    "id": "inc_heat_2026",
+    "name": "HEAT-2026-DUBAI-REF",
+    "type": "Extreme heat / mass-gathering public-health surge",
+    "severity": "major",
+    "status": "active",
+    "current_period": "OP-2",
+    "commander_operator_id": "opr_ic",
+    "jurisdiction": "Reference Jurisdiction (synthetic)",
+    "activated_hours_ago": 6,
+    "period_hours": 12,
+    "period_started_hours_ago": 2,
+    "narrative": "A multi-day heat dome coincides with a large outdoor event. Cooling centres in both sectors are filling. Oral rehydration salts and shade-shelter kits are under contention, and two field epidemiology teams have been requested. All sector names are generic; no real location is described.",
+    "objectives": [
+      "Prevent heat-related mortality across both sectors for the duration of the event.",
+      "Maintain cooling-centre capacity above 20 percent headroom in each sector.",
+      "Keep oral rehydration salts above reorder point at every cooling centre.",
+      "Sustain 20/40 rotation compliance for all outdoor field teams.",
+      "Produce a situation report each operational period with explicit information gaps."
+    ]
+  }
+}

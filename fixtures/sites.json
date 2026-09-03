@@ -1,0 +1,41 @@
+{
+  "_notice": "SYNTHETIC FIXTURE — not operational data. Coordinates are a regularly-spaced artificial grid, not real locations.",
+  "sites": [
+    {
+      "id": "site_cache",
+      "name": "Central Cache",
+      "kind": "warehouse",
+      "lat": 25.0,
+      "lon": 55.0,
+      "equity_priority": 2,
+      "notes": "Primary reserve. Holds stock on behalf of the sectors; may be drawn to zero."
+    },
+    {
+      "id": "site_staging",
+      "name": "Field Staging",
+      "kind": "field_team",
+      "lat": 25.05,
+      "lon": 55.0,
+      "equity_priority": 1,
+      "notes": "Forward staging point. Transit stock only, no resident population."
+    },
+    {
+      "id": "site_north",
+      "name": "Sector North Cooling Center",
+      "kind": "cooling_center",
+      "lat": 25.1,
+      "lon": 55.05,
+      "equity_priority": 5,
+      "notes": "Highest need. Adjacent to the mass-gathering footprint; no alternative site within 20 minutes."
+    },
+    {
+      "id": "site_south",
+      "name": "Sector South Cooling Center",
+      "kind": "cooling_center",
+      "lat": 25.0,
+      "lon": 55.1,
+      "equity_priority": 4,
+      "notes": "Elevated need. Serves a residential sector with limited transport options."
+    }
+  ]
+}

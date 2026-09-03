@@ -1,0 +1,17 @@
+{
+  "_notice": "SYNTHETIC FIXTURE — not operational data. Fictional resource catalogue.",
+  "skus": [
+    { "id": "sku_ors", "code": "ORS-KIT", "name": "Oral Rehydration Salts Kit", "category": "medical", "unit": "kit" },
+    { "id": "sku_electrolyte", "code": "ELECTRO-50", "name": "Electrolyte Powder (box of 50)", "category": "medical", "unit": "box" },
+    { "id": "sku_water", "code": "WATER-PAL", "name": "Bottled Water (1000 L pallet)", "category": "water", "unit": "pallet" },
+    { "id": "sku_cot", "code": "COT-STD", "name": "Standard Folding Cot", "category": "shelter", "unit": "unit" },
+    { "id": "sku_shade", "code": "SHADE-KIT", "name": "Shade Shelter Kit", "category": "shelter", "unit": "kit" },
+    { "id": "sku_mistfan", "code": "MISTFAN", "name": "Misting Fan Unit", "category": "cooling", "unit": "unit" },
+    { "id": "sku_icepack", "code": "ICEPACK-CS", "name": "Ice Pack Case", "category": "cooling", "unit": "case" },
+    { "id": "sku_n95", "code": "PPE-N95", "name": "N95 Respirator (box of 20)", "category": "ppe", "unit": "box" },
+    { "id": "sku_glove", "code": "PPE-GLOVE", "name": "Nitrile Gloves (box of 100)", "category": "ppe", "unit": "box" },
+    { "id": "sku_coldchain", "code": "COLDCHAIN-KIT", "name": "Cold-Chain Transport Kit", "category": "cold_chain", "unit": "kit" },
+    { "id": "sku_amb", "code": "AMB-TEAM", "name": "Ambulance Team (crew and vehicle)", "category": "personnel", "unit": "team" },
+    { "id": "sku_epi", "code": "EPI-TEAM", "name": "Field Epidemiologist Team", "category": "personnel", "unit": "team" }
+  ]
+}

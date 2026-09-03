@@ -1,0 +1,54 @@
+{
+  "_notice": "SYNTHETIC FIXTURE — not operational data. No real people. Demo passwords are public by design; see SECURITY.md.",
+  "demo_password": "demo",
+  "operators": [
+    {
+      "id": "opr_ic",
+      "username": "ic.demo",
+      "display_name": "IC-Demo",
+      "ics_role": "incident_commander",
+      "section": "command",
+      "advertised": true
+    },
+    {
+      "id": "opr_ops",
+      "username": "ops.demo",
+      "display_name": "OPERATIONS-1",
+      "ics_role": "operations_section",
+      "section": "operations",
+      "advertised": true
+    },
+    {
+      "id": "opr_log",
+      "username": "logistics.demo",
+      "display_name": "LOGISTICS-1",
+      "ics_role": "logistics_section",
+      "section": "logistics",
+      "advertised": true
+    },
+    {
+      "id": "opr_plan",
+      "username": "planning.demo",
+      "display_name": "PLANNING-1",
+      "ics_role": "planning_section",
+      "section": "planning",
+      "advertised": false
+    },
+    {
+      "id": "opr_north",
+      "username": "north.demo",
+      "display_name": "Operator North",
+      "ics_role": "operations_section",
+      "section": "operations",
+      "advertised": false
+    },
+    {
+      "id": "opr_south",
+      "username": "south.demo",
+      "display_name": "Operator South",
+      "ics_role": "operations_section",
+      "section": "operations",
+      "advertised": false
+    }
+  ]
+}

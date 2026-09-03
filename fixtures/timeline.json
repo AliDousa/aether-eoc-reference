@@ -1,0 +1,180 @@
+{
+  "_notice": "SYNTHETIC FIXTURE — not operational data. A scripted six-hour history, replayed through the application's own service functions so the seeded audit log is genuine.",
+  "_replay": "Each step is applied with the seeding clock set to `activated_at + at_minutes`. Steps of kind `note` post an activity entry; `request` creates a resource request; `recommend` invokes the supervisor; `approve` and `reject` are human decisions that move stock or refuse it.",
+  "steps": [
+    {
+      "at_minutes": 0,
+      "kind": "note",
+      "actor": "opr_ic",
+      "section": "command",
+      "body": "EOC activated at Level 2 for a multi-day heat dome coinciding with a large outdoor event. Operational period OP-1 begins now. Both sector cooling centres to be brought online."
+    },
+    {
+      "at_minutes": 12,
+      "kind": "note",
+      "actor": "opr_plan",
+      "section": "planning",
+      "body": "OP-1 objectives published. Priority is preventing heat-related mortality and keeping cooling-centre headroom above 20 percent in each sector."
+    },
+    {
+      "at_minutes": 26,
+      "kind": "note",
+      "actor": "opr_north",
+      "section": "operations",
+      "body": "Sector North Cooling Center is open. Minimum opening set confirmed: water, ORS, shade kits over the queue area, 40 cots, heat-illness trained staff on shift."
+    },
+    {
+      "at_minutes": 41,
+      "kind": "note",
+      "actor": "opr_south",
+      "section": "operations",
+      "body": "Sector South Cooling Center is open. Cot count is 20 against a reorder point of 30; flagged to Logistics."
+    },
+    {
+      "at_minutes": 58,
+      "kind": "note",
+      "actor": "opr_ops",
+      "section": "operations",
+      "body": "Heat index 41 C. All outdoor field teams moved to mandatory 20 minutes on, 40 minutes off rotation."
+    },
+    {
+      "at_minutes": 84,
+      "kind": "request",
+      "ref": "req_water",
+      "actor": "opr_log",
+      "sku_id": "sku_water",
+      "quantity": 12,
+      "priority": "priority",
+      "section": "logistics",
+      "destination": "site_north",
+      "justification": "Sector North water burn rate is ahead of plan at 4 L per occupant per period. On-site stock is 4 pallets against a reorder point of 6."
+    },
+    { "at_minutes": 89, "kind": "recommend", "ref": "req_water", "actor": "opr_log" },
+    {
+      "at_minutes": 101,
+      "kind": "approve",
+      "ref": "req_water",
+      "actor": "opr_log",
+      "reason": "Approved as recommended. Drawn from Field Staging first, balance from Central Cache. No cooling-centre stock touched."
+    },
+    {
+      "at_minutes": 118,
+      "kind": "note",
+      "actor": "opr_north",
+      "section": "operations",
+      "body": "Water resupply received and logged at Sector North. Occupancy 45 percent and rising steadily."
+    },
+    {
+      "at_minutes": 134,
+      "kind": "note",
+      "actor": "opr_ops",
+      "section": "operations",
+      "body": "Two heat-exhaustion presentations at Sector North in the last hour. Both cooled on site and released. Clinical load well below the 10 per hour activation threshold."
+    },
+    {
+      "at_minutes": 151,
+      "kind": "request",
+      "ref": "req_epi",
+      "actor": "opr_ops",
+      "sku_id": "sku_epi",
+      "quantity": 2,
+      "priority": "priority",
+      "section": "operations",
+      "destination": "site_north",
+      "justification": "Two field epidemiology teams requested for active case-finding around the event footprint after the Sector North presentations."
+    },
+    { "at_minutes": 156, "kind": "recommend", "ref": "req_epi", "actor": "opr_ops" },
+    {
+      "at_minutes": 172,
+      "kind": "reject",
+      "ref": "req_epi",
+      "actor": "opr_ic",
+      "reason": "Field epidemiology capacity is committed to the surveillance cell for the remainder of OP-2. Only one team is available and splitting it would leave neither task covered. Re-request at the OP-3 handover with a case-count justification."
+    },
+    {
+      "at_minutes": 188,
+      "kind": "note",
+      "actor": "opr_plan",
+      "section": "planning",
+      "body": "OP-2 begins. Objectives carried forward unchanged. Information gap logged: no automated occupancy feed, all figures are from 30-minute voice reports."
+    },
+    {
+      "at_minutes": 206,
+      "kind": "note",
+      "actor": "opr_south",
+      "section": "operations",
+      "body": "Sector South occupancy 62 percent. Ice packs at 18 against a reorder point of 20."
+    },
+    {
+      "at_minutes": 221,
+      "kind": "note",
+      "actor": "opr_north",
+      "section": "operations",
+      "body": "Sector North occupancy 78 percent and climbing. Approaching the 80 percent threshold for a second centre in the sector."
+    },
+    {
+      "at_minutes": 238,
+      "kind": "note",
+      "actor": "opr_ops",
+      "section": "operations",
+      "body": "ORS consumption at Sector North running well ahead of the 1 sachet per 10 occupants per hour planning figure. On-site stock will not last the period."
+    },
+    {
+      "at_minutes": 252,
+      "kind": "request",
+      "ref": "req_cots",
+      "actor": "opr_log",
+      "sku_id": "sku_cot",
+      "quantity": 60,
+      "priority": "priority",
+      "section": "logistics",
+      "destination": "site_south",
+      "justification": "Sector South is 10 cots below its reorder point with occupancy at 62 percent. Requesting 60 to cover the next two operational periods."
+    },
+    {
+      "at_minutes": 271,
+      "kind": "request",
+      "ref": "req_shade",
+      "actor": "opr_ops",
+      "sku_id": "sku_shade",
+      "quantity": 24,
+      "priority": "routine",
+      "section": "operations",
+      "destination": "site_north",
+      "justification": "Additional shade over the Sector North queueing area. Routine: the queue is currently covered, but not if occupancy forces an outdoor overflow line."
+    },
+    {
+      "at_minutes": 302,
+      "kind": "note",
+      "actor": "opr_north",
+      "section": "operations",
+      "body": "One person was briefly turned away during a queue surge before space was found. Logging it: a single turn-away is a hard trigger for opening a second centre in this sector."
+    },
+    {
+      "at_minutes": 322,
+      "kind": "request",
+      "ref": "req_ors",
+      "actor": "opr_ops",
+      "sku_id": "sku_ors",
+      "quantity": 400,
+      "priority": "immediate",
+      "section": "operations",
+      "destination": "site_north",
+      "justification": "IMMEDIATE. Sector North holds 25 ORS kits against a reorder point of 80, with occupancy at 78 percent and consumption ahead of plan. 400 kits needed to cover the remainder of OP-2 and the OP-3 handover."
+    },
+    {
+      "at_minutes": 341,
+      "kind": "note",
+      "actor": "opr_log",
+      "section": "logistics",
+      "body": "ORS request received. No single site can fill 400 kits. Central Cache and Field Staging together fall short, and Sector South is itself below reorder, so its stock is protected by the equity floor."
+    },
+    {
+      "at_minutes": 356,
+      "kind": "note",
+      "actor": "opr_ic",
+      "section": "command",
+      "body": "Hold on the ORS allocation until the recommender has run and the equity review is on the record. Nothing moves before a human signs it off."
+    }
+  ]
+}
