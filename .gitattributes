@@ -1,0 +1,22 @@
+# Normalise line endings so a contributor on Linux or macOS never sees a
+# whole-file diff caused by a Windows checkout. Text is stored as LF in the
+# repository and checked out natively.
+* text=auto eol=lf
+
+# Shell scripts and Makefiles must be LF even on Windows, or they will not run.
+*.sh          text eol=lf
+Makefile      text eol=lf
+Dockerfile    text eol=lf
+*.py          text eol=lf
+*.ts          text eol=lf
+*.tsx         text eol=lf
+
+# Generated lockfiles: keep them out of diffs and language statistics.
+package-lock.json  linguist-generated=true -diff
+uv.lock            linguist-generated=true -diff
+
+# Binary assets, should any be added later.
+*.png  binary
+*.jpg  binary
+*.webp binary
+*.pdf  binary
