@@ -21,11 +21,14 @@ of patterns the `synthetic-data-check` job runs in CI:
 ```bash
 git grep -nIE --ignore-case \
   -e 'nabidh|dha[-_ ]?prod|production fhir' \
-  -e '\b(10\.[0-9]{1,3}|192\.168\.|172\.(1[6-9]|2[0-9]|3[01])\.)[0-9]{1,3}\.[0-9]{1,3}\b' \
+  -e '\b(10\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}|192\.168\.[0-9]{1,3}\.[0-9]{1,3}|172\.(1[6-9]|2[0-9]|3[01])\.[0-9]{1,3}\.[0-9]{1,3})\b' \
   -e 'BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY|id_rsa' \
   -e '\b(AKIA[0-9A-Z]{16}|sk-[a-zA-Z0-9]{20,}|ghp_[a-zA-Z0-9]{30,})\b' \
   -e '(postgres|mysql|mongodb)://[^ "]*@' \
-  -- ':!PUBLISH.md' ':!.github/workflows/ci.yml' ':!docs/THREAT_MODEL.md' ':!SECURITY.md'
+  -- ':!PUBLISH.md' ':!.github/workflows/ci.yml' ':!.gitignore' \
+     ':!**/package-lock.json' ':!**/uv.lock' \
+     ':!docs/THREAT_MODEL.md' ':!SECURITY.md' \
+     ':!docs/adr/0006-synthetic-data-only-public-release.md'
 
 git ls-files | grep -E '(^|/)\.env$' && echo "STOP: .env is tracked"
 ```
