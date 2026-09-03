@@ -1,0 +1,59 @@
+# aether-eoc-reference — local demo stack.
+#
+# Two processes, by design (ADR-0001): the API is a modular monolith that also
+# serves the WebSocket, and the web app is the UI. There is no message broker,
+# no cache tier, and no Kubernetes here — a reference slice should be readable,
+# not operationally impressive.
+#
+#   docker compose up --build   ->  http://localhost:3000
+#
+# The stack runs with no API keys. Agents fall back to deterministic fixture
+# mode when LLM_PROVIDER=none.
+
+services:
+  api:
+    build:
+      context: ./apps/api
+    container_name: aether-eoc-api
+    environment:
+      DEMO_MODE: "true"
+      # Container-local path; persisted through the named volume below.
+      DATABASE_URL: "sqlite+aiosqlite:////data/eoc.db"
+      LLM_PROVIDER: "${LLM_PROVIDER:-none}"
+      LLM_API_KEY: "${LLM_API_KEY:-}"
+      LLM_MODEL: "${LLM_MODEL:-}"
+      EMBEDDING_PROVIDER: "${EMBEDDING_PROVIDER:-none}"
+      # Web origin allowed to call the API and open the WebSocket.
+      CORS_ORIGINS: "http://localhost:${WEB_PORT:-3000}"
+    volumes:
+      # The synthetic SOP corpus is read at runtime by the protocol retriever.
+      - ./knowledge:/app/knowledge:ro
+      - ./fixtures:/app/fixtures:ro
+      - eoc-data:/data
+    ports:
+      - "${API_PORT:-8080}:8080"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8080/api/health').status==200 else 1)"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 15s
+
+  web:
+    build:
+      context: ./apps/web
+      args:
+        # Baked in at build time: Next.js inlines NEXT_PUBLIC_* into the bundle.
+        NEXT_PUBLIC_API_BASE: "http://localhost:${API_PORT:-8080}"
+        NEXT_PUBLIC_WS_BASE: "ws://localhost:${API_PORT:-8080}"
+    container_name: aether-eoc-web
+    environment:
+      NODE_ENV: "production"
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  eoc-data:
