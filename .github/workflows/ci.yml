@@ -1,0 +1,161 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# No secrets are used anywhere in this workflow, and that is deliberate: the
+# demo must be fully exercisable without an API key (ADR-0005). If a change
+# needs a credential to pass CI, it is out of scope for this repository.
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Explicit rather than inherited, so a stray environment variable cannot
+  # silently switch the agents out of deterministic fixture mode.
+  LLM_PROVIDER: none
+  LLM_API_KEY: ""
+  EMBEDDING_PROVIDER: none
+  DEMO_MODE: "true"
+
+jobs:
+  api:
+    name: API — ruff, pyright, pytest
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/api
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: apps/api/pyproject.toml
+
+      - name: Set up Python 3.12
+        run: uv python install 3.12
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Lint (ruff)
+        run: uv run ruff check .
+
+      - name: Format check (ruff)
+        run: uv run ruff format --check .
+
+      - name: Type check (pyright)
+        run: uv run pyright
+
+      - name: Test (pytest)
+        # `python -m pytest` rather than the console script: the shim is blocked
+        # by application-control policy on some developer machines, and this
+        # form works everywhere.
+        run: uv run python -m pytest -q
+
+      - name: Seed smoke test
+        # Proves the scenario builds and the audit chain verifies from genesis.
+        run: |
+          uv run python -m app.seed --reset
+          uv run python -c "
+          import asyncio
+          from app.audit import verify_chain
+          from app.db import get_session_factory
+
+          async def main():
+              async with get_session_factory()() as session:
+                  result = await verify_chain(session)
+                  print(result.detail)
+                  assert result.ok, result.problems
+                  assert result.checked > 20, 'seed produced too few audit rows'
+
+          asyncio.run(main())
+          "
+
+  web:
+    name: Web — eslint, tsc, vitest, build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint (eslint)
+        run: npm run lint
+
+      - name: Format check (prettier)
+        run: npm run format:check
+
+      - name: Type check (tsc)
+        run: npm run typecheck
+
+      - name: Test (vitest)
+        run: npm run test -- --run
+
+      - name: Build
+        run: npm run build
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+
+  synthetic-data-check:
+    name: Synthetic data sweep
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fail on anything that looks like real or sensitive data
+        # A cheap standing guard against the one mistake that would actually
+        # matter here (ADR-0006). It is not a secret scanner; it is a tripwire
+        # for the specific things this repository must never contain.
+        run: |
+          set -euo pipefail
+          status=0
+
+          check() {
+            local label="$1" pattern="$2"
+            # Search tracked files only, excluding this workflow itself.
+            if git grep -nIE --ignore-case -- "$pattern" \
+                 -- ':!.github/workflows/ci.yml' ':!docs/THREAT_MODEL.md' \
+                    ':!SECURITY.md' ':!docs/adr/0006-synthetic-data-only-public-release.md' \
+                 > /tmp/hits 2>/dev/null; then
+              echo "::error::Possible $label found:"
+              cat /tmp/hits
+              status=1
+            fi
+          }
+
+          check "agency or integration reference" 'nabidh|dha[-_ ]?prod|production fhir'
+          check "private IP address"              '\b(10\.[0-9]{1,3}|192\.168\.|172\.(1[6-9]|2[0-9]|3[01])\.)[0-9]{1,3}\.[0-9]{1,3}\b'
+          check "private key material"            'BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY|id_rsa'
+          check "cloud access key"                '\b(AKIA[0-9A-Z]{16}|ASIA[0-9A-Z]{16})\b'
+          check "provider API token"              '\b(sk-[a-zA-Z0-9]{20,}|ghp_[a-zA-Z0-9]{30,}|xox[baprs]-[a-zA-Z0-9-]{10,})\b'
+          check "non-local database URL"          '(postgres|postgresql|mysql|mongodb)://[^ "]*@(?!localhost|127\.0\.0\.1)'
+          check "wire-to-production TODO"         'TODO:? *wire (to|up) (the )?prod'
+
+          if [ -f .env ]; then
+            echo "::error::.env is committed. It must never be."
+            status=1
+          fi
+
+          if [ "$status" -eq 0 ]; then
+            echo "Synthetic data sweep passed."
+          fi
+          exit "$status"
