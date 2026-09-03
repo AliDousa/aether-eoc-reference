@@ -50,6 +50,19 @@ gh repo create AliDousa/aether-eoc-reference \
 
 The description is 158 characters, inside GitHub's 160-character limit.
 
+> **If the push is rejected with `refusing to allow an OAuth App to create or
+> update workflow .github/workflows/ci.yml without workflow scope`:**
+>
+> `gh`'s default token carries `repo` but not `workflow`, and GitHub requires
+> the latter to push anything under `.github/workflows/`. The repository will
+> have been created; only the push failed. Grant the scope once (this opens a
+> browser), then push:
+>
+> ```bash
+> gh auth refresh -h github.com -s workflow
+> git push -u origin main
+> ```
+
 <details>
 <summary>Without <code>gh</code></summary>
 
