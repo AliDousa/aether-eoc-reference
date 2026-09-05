@@ -4,7 +4,7 @@
   "private": true,
   "description": "Operator UI for the Aether EOC reference slice. Synthetic demo only.",
   "engines": {
-    "node": ">=20.9.0"
+    "node": ">=22.12.0"
   },
   "scripts": {
     "dev": "next dev",

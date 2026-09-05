@@ -85,8 +85,12 @@ Full container and sequence diagrams: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE
 
 ## Quick start
 
-Requires **Node 20.9+** and **Python 3.12** (via [uv](https://docs.astral.sh/uv/)).
+Requires **Node 22.12+** and **Python 3.12** (via [uv](https://docs.astral.sh/uv/)).
 No database server, no API key, no accounts.
+
+> Node 22.12 is the floor because the test runner's jsdom dependency is
+> ESM-only and needs `require(esm)`, which Node enabled by default in
+> 22.12. There is an `.nvmrc`, so `nvm use` picks a working version.
 
 ```bash
 git clone https://github.com/AliDousa/aether-eoc-reference.git

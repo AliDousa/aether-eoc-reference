@@ -91,7 +91,9 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          # Read from .nvmrc so CI, the Dockerfile, and a contributor's `nvm use`
+          # cannot drift apart. The floor is 22.12: jsdom needs `require(esm)`.
+          node-version-file: .nvmrc
           cache: npm
           cache-dependency-path: apps/web/package-lock.json
 
