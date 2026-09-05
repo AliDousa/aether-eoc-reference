@@ -211,10 +211,10 @@ silently to fixture mode. See [`docs/AI_SPEC.md`](docs/AI_SPEC.md).
 
 ## Tests
 
-28 tests, none of which need an API key:
+32 tests, none of which need an API key:
 
 ```bash
-make test          # 18 API (pytest) + 10 web (vitest)
+make test          # 18 API (pytest) + 14 web (vitest)
 make lint          # ruff + eslint
 make typecheck     # pyright + tsc
 ```

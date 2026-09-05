@@ -11,7 +11,7 @@ Run the checks that must pass:
 ```bash
 make lint          # ruff + eslint
 make typecheck     # pyright + tsc
-make test          # 18 API + 10 web, no API key needed
+make test          # 18 API + 14 web, no API key needed
 make reset         # rebuild the scenario from fixtures and verify the audit chain
 ```
 

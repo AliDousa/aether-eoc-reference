@@ -129,12 +129,26 @@ jobs:
           set -euo pipefail
           status=0
 
+          # Paths whose job is to *talk about* these patterns: the ignore rules
+          # that block private keys, the publishing runbook, the security docs,
+          # the ADR that records this policy, and this workflow itself. Also the
+          # generated lockfiles, which are full of version numbers and are
+          # covered by dependency review rather than content matching.
+          EXCLUDE=(
+            ':!.github/workflows/ci.yml'
+            ':!.gitignore'
+            ':!PUBLISH.md'
+            ':!SECURITY.md'
+            ':!docs/THREAT_MODEL.md'
+            ':!docs/adr/0006-synthetic-data-only-public-release.md'
+            ':!**/package-lock.json'
+            ':!**/uv.lock'
+          )
+
           check() {
             local label="$1" pattern="$2"
-            # Search tracked files only, excluding this workflow itself.
-            if git grep -nIE --ignore-case -- "$pattern" \
-                 -- ':!.github/workflows/ci.yml' ':!docs/THREAT_MODEL.md' \
-                    ':!SECURITY.md' ':!docs/adr/0006-synthetic-data-only-public-release.md' \
+            # Tracked files only.
+            if git grep -nIE --ignore-case -- "$pattern" -- "${EXCLUDE[@]}" \
                  > /tmp/hits 2>/dev/null; then
               echo "::error::Possible $label found:"
               cat /tmp/hits
@@ -143,14 +157,20 @@ jobs:
           }
 
           check "agency or integration reference" 'nabidh|dha[-_ ]?prod|production fhir'
-          check "private IP address"              '\b(10\.[0-9]{1,3}|192\.168\.|172\.(1[6-9]|2[0-9]|3[01])\.)[0-9]{1,3}\.[0-9]{1,3}\b'
+          # A full dotted quad. A three-octet pattern matches version ranges
+          # such as ">=10.13.0" and produces false failures.
+          check "private IP address"              '\b(10\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}|192\.168\.[0-9]{1,3}\.[0-9]{1,3}|172\.(1[6-9]|2[0-9]|3[01])\.[0-9]{1,3}\.[0-9]{1,3})\b'
           check "private key material"            'BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY|id_rsa'
           check "cloud access key"                '\b(AKIA[0-9A-Z]{16}|ASIA[0-9A-Z]{16})\b'
           check "provider API token"              '\b(sk-[a-zA-Z0-9]{20,}|ghp_[a-zA-Z0-9]{30,}|xox[baprs]-[a-zA-Z0-9-]{10,})\b'
           check "non-local database URL"          '(postgres|postgresql|mysql|mongodb)://[^ "]*@(?!localhost|127\.0\.0\.1)'
           check "wire-to-production TODO"         'TODO:? *wire (to|up) (the )?prod'
 
-          if [ -f .env ]; then
+          # Tracked, not merely present. A developer's local .env is expected
+          # and is gitignored; the thing that must never happen is it being
+          # committed. `[ -f .env ]` would test the wrong one and pass or fail
+          # for the wrong reason.
+          if git ls-files --error-unmatch .env >/dev/null 2>&1; then
             echo "::error::.env is committed. It must never be."
             status=1
           fi

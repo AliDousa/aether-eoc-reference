@@ -249,7 +249,7 @@ is visible and unconditional.
 Run with no API key:
 
 ```bash
-make test        # 18 API tests + 10 web tests
+make test        # 18 API tests + 14 web tests
 ```
 
 The guardrail assertions specifically: a recommendation does not mutate

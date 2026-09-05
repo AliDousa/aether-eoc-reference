@@ -9,7 +9,6 @@
  * courtesy, not a control.
  */
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CircleAlert, Loader2, Plus, X } from "lucide-react";
 import { useState } from "react";
@@ -20,6 +19,7 @@ import { RequestsTable } from "@/components/requests-table";
 import type { ViewRole } from "@/components/requests-table";
 import { ApiError, api } from "@/lib/api";
 import { cn } from "@/lib/format";
+import { zodResolver } from "@/lib/form";
 import { Permission, useSession } from "@/lib/session";
 
 const schema = z.object({

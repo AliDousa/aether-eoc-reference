@@ -99,3 +99,12 @@ wagging dog for a demo.
   resizing; a plain semantic `<table>` is clearer to read, has no API-churn
   risk, and avoids shipping a dependency in compatibility mode. TanStack Query
   is still used, and does real work.
+- `@hookform/resolvers` was **removed** and replaced by a twenty-line resolver
+  in `apps/web/lib/form.ts`. It requires `ajv@^8` while ESLint 9 requires
+  `ajv@^6`; npm writes a lockfile for that pair which it then rejects under
+  `npm ci` (reproducible from a clean tree on both npm 10 and 11), so CI could
+  not install strictly. The alternatives were to weaken CI to `npm install` or
+  to carry a dependency tree for a single form. React Hook Form's resolver
+  contract is one function — take values, return values or field errors — so
+  owning it was the smaller cost. It is covered by `apps/web/tests/form.test.ts`,
+  because first-party code should be tested rather than trusted.

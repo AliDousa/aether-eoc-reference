@@ -71,7 +71,7 @@ make install
 make seed
 make dev
 
-make test        # 18 API + 10 web, no API key required
+make test        # 18 API + 14 web, no API key required
 make lint        # ruff + eslint
 make typecheck   # pyright + tsc
 make fmt         # ruff format + prettier

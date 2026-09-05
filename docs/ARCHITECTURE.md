@@ -181,7 +181,7 @@ These are real and are not worked around:
 | Data | TanStack Query | 5 |
 | Forms | React Hook Form + Zod | 7 / 4 |
 | Charts | Recharts | 3 |
-| Tests | pytest + Vitest / Testing Library | 28 tests |
+| Tests | pytest + Vitest / Testing Library | 32 tests |
 
 Deviations from the intended stack, with reasons, are recorded in ADR-0001
 (TanStack Table, npm over pnpm) and in `tests/web/README.md` (web test location).
