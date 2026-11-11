@@ -15,8 +15,21 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 def _repo_root() -> Path:
-    """Repository root when running from source (apps/api/app/config.py)."""
-    return Path(__file__).resolve().parents[3]
+    """Project content root in source and container layouts."""
+    here = Path(__file__).resolve()
+    candidates = (here.parent, *here.parents)
+
+    for candidate in candidates:
+        if (candidate / "knowledge").is_dir() and (candidate / "fixtures").is_dir():
+            return candidate
+        if (candidate / "docker-compose.yml").is_file():
+            return candidate
+
+    for candidate in candidates:
+        if (candidate / "pyproject.toml").is_file():
+            return candidate
+
+    return here.parent
 
 
 def _first_existing(*candidates: Path) -> Path:
